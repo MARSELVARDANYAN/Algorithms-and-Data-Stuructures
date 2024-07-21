@@ -5,20 +5,24 @@
 #include <initializer_list>
 #include <iterator>
 #include <algorithm>
+#include <stdexcept>
 
 template <typename T>
-class LinkedList
+class List
 {
-  private:
+  public:
       struct Node
       {
-          T data;
+          T data{};
           Node* next;
-          Node(const T& val) : data(val), next(nullptr) {}// Parameterised constructor with default argument
-          Node(T val, Node *tempNext): data(val),next(tempNext){}// Parameterise constructor
+          Node* prew;
+          Node(const T& val) : data(val), next(nullptr), prew(nullptr) {}// Parameterised constructor with default argument
+          Node(T val, Node *tempNext, Node* tempPrew): data(val),next(tempNext), prew(tempPrew){}// Parameterise constructor
       };
       
+      size_t count{};
       Node* head;
+      Node* tail;
 
   public:
       using value_type = T;
@@ -29,26 +33,32 @@ class LinkedList
       using const_pointer = const value_type*;
 
   public:
-      LinkedList();
-      LinkedList(const LinkedList<T>&);
-      LinkedList(std::initializer_list<T> initlist);
-      ~LinkedList();
+      List();
+      List(const List<T>&);
+      List(std::initializer_list<T> initlist);
+      ~List();
 
   public:
       class const_iterator;
       class iterator;
-
+      class reverse_iterator;
+      class const_reverse_iterator;
+  private:
+      size_t get_size();
   public:
-      void push_back(const T& val);
       referance front();
       const_referance front() const;
+      referance back();
+      const_referance back() const;
       void print_list();
       void push_front(const_referance);
       void pop_front();
-      iterator insert_after( const_iterator pos, const_referance val);
-      iterator erase_after( const_iterator pos );
+      void push_back(const_referance);
+      void pop_back();
+      iterator insert_after( iterator pos, const_referance val);
+      iterator erase_after( iterator pos );
       void reverse() noexcept;
-      void merge( LinkedList& other );
+      void merge( List& other );
       bool empty() const noexcept;      
       void unique();
       void sort();
@@ -66,9 +76,9 @@ class LinkedList
 
 //CONST ITERATOR+++++
 template <typename T>
-class LinkedList<T>::const_iterator
+class List<T>::const_iterator
 {
-    friend class LinkedList<T>;
+    friend class List<T>;
 protected:
     const Node* ptr;
 
@@ -85,20 +95,22 @@ public:
 
     const_iterator& operator++();
     const_iterator operator++(int);
+    const_iterator& operator--() ;
+    const_iterator operator--(int);
     const T& operator*() const;
 
 };
 
 //ITERATOR+++++++++++
 template <typename T>
-class LinkedList<T>::iterator : public LinkedList<T>::const_iterator
+class List<T>::iterator : public List<T>::const_iterator
 {
-    friend class LinkedList<T>;
+    friend class List<T>;
 
 private:
     Node* ptr;
 
-private:
+public:
     iterator(Node* ptr);
 
 public:
@@ -111,8 +123,10 @@ public:
 
     iterator& operator++();
     iterator operator++(int);
+    iterator& operator--();
+    iterator operator--(int);
     T& operator*();
 };
 
-#include "../Headers/Forward_List.hpp"
+#include "../Headers/List.hpp"
 #endif // 

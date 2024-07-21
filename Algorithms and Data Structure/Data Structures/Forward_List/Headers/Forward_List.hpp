@@ -14,13 +14,22 @@ LinkedList<T>::LinkedList(const LinkedList<T>& rhv)
     {
         return;
     }
-    Node* current = rhv.head;
-    while(current != nullptr)
+
+    head = new Node(rhv.head->data);
+
+    Node* current = rhv.head->next;
+    Node* newCurrent = head;
+
+    while (current != nullptr)
     {
-        push_back(current->data);
+        newCurrent->next = new Node(current->data);
+
+        newCurrent = newCurrent->next;
         current = current->next;
     }
 }
+
+
 
 template <typename T>
 LinkedList<T>::LinkedList(std::initializer_list<T> initlist) 
@@ -36,6 +45,25 @@ template<typename T>
 LinkedList<T>::~LinkedList() 
 {
     clear();
+}
+
+template <typename T>
+void LinkedList<T>::push_back(const T& val)
+{
+    Node* newNode = new Node(val);
+    if (head == nullptr)
+    {
+        head = newNode;
+    }
+    else
+    {
+        Node* current = head;
+        while (current->next != nullptr)
+        {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
 }
 
 template <typename T>
