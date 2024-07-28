@@ -14,9 +14,9 @@ Vector<T, Allocator>::Vector(const Vector& rhv)
 {
     this->v_size = rhv.v_size;
     this->v_capacity = rhv.v_capacity;
-    alloc.allocate(arr, rhv.v_capacity);
+    arr = alloc.allocate(rhv.v_capacity);
     for(size_type i = 0; i < v_size; ++i) {
-        alloc.construct(arr + i, rhv.arr_[i]);
+        alloc.construct(arr + i, rhv.arr[i]);
     }
     
 }
@@ -578,8 +578,8 @@ bool Vector<T, Allocator>::operator>=(const Vector& other) const
 template <typename T, typename Allocator>
 int Vector<T, Allocator>::compare(const Vector& other) const
 {
-    if (arr.Size() < other.arr.Size()) return -1;
-    if (arr.Size() > other.arr.Size()) return 1;
+    if (this->Size() < other.Size())return -1;
+    if (Size() > other.Size()) return 1;
 
     return 0;
 }

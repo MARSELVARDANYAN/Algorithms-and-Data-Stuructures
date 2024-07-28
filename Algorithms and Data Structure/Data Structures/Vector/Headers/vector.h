@@ -77,7 +77,7 @@ public:
     
 public:
     bool empty() const;
-    size_type Size() const;
+    size_t Size() const;
     size_type capacity() const;
 
     void reserve(size_type new_cap);
