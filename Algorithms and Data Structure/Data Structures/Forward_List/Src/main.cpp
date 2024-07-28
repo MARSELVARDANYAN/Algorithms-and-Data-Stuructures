@@ -23,7 +23,11 @@ int main()
     li.unique();
     li.print_list();
 
+    li.print_list();
+    
+    std::cout << li[1] << std::endl;
+
+    std::cout << "size == " << li.Get_size();
     li.clear();
 
-    li.print_list();
 }

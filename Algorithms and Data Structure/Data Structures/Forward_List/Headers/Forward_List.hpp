@@ -1,14 +1,16 @@
 #include "../Headers/Forward_list.h"
+#include "Forward_list.h"
 
 
 template <typename T>
 LinkedList<T>::LinkedList()
     : head(nullptr)
+    , l_size(0)
 {}
 
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList<T>& rhv)
-    : head{nullptr}
+    : LinkedList()
 {
     if (rhv.head == nullptr) 
     {
@@ -27,6 +29,7 @@ LinkedList<T>::LinkedList(const LinkedList<T>& rhv)
         newCurrent = newCurrent->next;
         current = current->next;
     }
+    l_size = rhv.l_size;
 }
 
 
@@ -52,17 +55,17 @@ void LinkedList<T>::push_back(const T& val)
 {
     Node* newNode = new Node(val);
     if (head == nullptr)
-    {
+    {   
+        ++l_size;
         head = newNode;
     }
-    else
-    {
+    else {
         Node* current = head;
-        while (current->next != nullptr)
-        {
+        while (current->next != nullptr) {
             current = current->next;
         }
         current->next = newNode;
+        ++l_size;
     }
 }
 
@@ -96,6 +99,7 @@ void LinkedList<T>::push_front(const_referance val)
     Node* newNode = new Node(val);
     newNode->next = this->head;
     head = newNode;
+    ++l_size;
 }
 
 template <typename T>
@@ -106,6 +110,7 @@ void LinkedList<T>::pop_front()
     delete head; 
     head = nullptr;
     head = tmp;
+    --l_size;
 }
 
 template<typename T>
@@ -126,6 +131,7 @@ LinkedList<T>::insert_after(const_iterator index, const_referance val) {
     } else {
         throw std::out_of_range("Index out of range");
     }
+    ++l_size;
 }
 
 
@@ -141,7 +147,8 @@ LinkedList<T>::erase_after(const_iterator pos){
         return iterator(current->next); 
     } else {
         throw std::out_of_range("Index out of range");
-}
+    }
+    --l_size;
 
 }
 
@@ -183,6 +190,7 @@ void LinkedList<T>::merge(LinkedList& other)
     }
 
     other.head = current2;
+    l_size += other.l_size;
 
 }
 
@@ -214,6 +222,7 @@ void LinkedList<T>::unique()
                 Node* temp = runner->next;
                 runner->next = runner->next->next;
                 delete temp;
+                --l_size;
             } else {
                 runner = runner->next;
             }
@@ -240,6 +249,30 @@ void LinkedList<T>::clear() noexcept
         current = next;
     }
     head = nullptr;
+    l_size = 0;
+}
+
+template <typename T>
+T &LinkedList<T>::operator[](const size_t index)
+{
+    size_t count{};
+    Node* curr = this->head;
+    while (curr != nullptr){
+        if (count == index){
+            return curr->data;
+        }
+        curr = curr->next;
+        ++count;
+    }
+    throw;
+    
+}
+
+template <typename T>
+typename LinkedList<T>::size_type 
+LinkedList<T>::Get_size() const
+{
+    return l_size;
 }
 
 template <class T>

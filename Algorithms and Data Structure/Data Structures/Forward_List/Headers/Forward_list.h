@@ -14,12 +14,10 @@ class LinkedList
       {
           T data;
           Node* next;
-          Node(const T& val) : data(val), next(nullptr) {}// Parameterised constructor with default argument
-          Node(T val, Node *tempNext): data(val),next(tempNext){}// Parameterise constructor
+          //Node(const T& val) : data(val), next(nullptr) {}// Parameterised constructor with default argument
+          Node(T val = T(), Node *tempNext = nullptr): data(val),next(tempNext){}// Parameterise constructor
       };
       
-      Node* head;
-
   public:
       using value_type = T;
       using size_type = size_t;
@@ -27,6 +25,10 @@ class LinkedList
       using const_referance = const value_type&;
       using pointer = value_type*;
       using const_pointer = const value_type*;
+
+  private:
+      Node* head;
+      size_type l_size;
 
   public:
       LinkedList();
@@ -53,6 +55,8 @@ class LinkedList
       void unique();
       void sort();
       void clear() noexcept;
+      referance operator[](const size_t index);
+      size_type Get_size() const;
 
   public:
       iterator begin();
