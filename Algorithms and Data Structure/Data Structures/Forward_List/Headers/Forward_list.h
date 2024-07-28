@@ -90,6 +90,13 @@ public:
     const_iterator& operator++();
     const_iterator operator++(int);
     const T& operator*() const;
+    const Node* operator->() const
+    {
+        return ptr;
+    }
+
+    bool operator==(const const_iterator& other) const;      
+    bool operator!=(const const_iterator& other) const;
 
 };
 
@@ -116,7 +123,13 @@ public:
     iterator& operator++();
     iterator operator++(int);
     T& operator*();
+    Node* operator->() 
+    {
+        return ptr;
+    }
 };
+
+
 
 #include "../Headers/Forward_List.hpp"
 #endif // 

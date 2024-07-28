@@ -96,9 +96,7 @@ void LinkedList<T>::print_list()
 template <typename T>
 void LinkedList<T>::push_front(const_referance val)
 {
-    Node* newNode = new Node(val);
-    newNode->next = this->head;
-    head = newNode;
+    head = new Node(val, head);
     ++l_size;
 }
 
@@ -106,10 +104,8 @@ template <typename T>
 void LinkedList<T>::pop_front()
 {
     Node* tmp = this->head;
-    tmp = this->head->next; 
-    delete head; 
-    head = nullptr;
-    head = tmp;
+    head = head->next; 
+    delete tmp; 
     --l_size;
 }
 
@@ -117,21 +113,34 @@ template<typename T>
 typename LinkedList<T>::iterator 
 LinkedList<T>::insert_after(const_iterator index, const_referance val) {
     
-    if (index == nullptr) {
-        throw std::invalid_argument("Invalid iterator");
+    if (l_size == 0) {
+        push_front(val);
+        return head;
     }
     
-    Node* current = index.ptr; 
-    if (current != nullptr) {
-        Node* temp = new Node(val); 
-        temp->next = current->next; 
-        current->next = temp; 
-        
-        return iterator(temp); 
-    } else {
-        throw std::out_of_range("Index out of range");
+    Node* current = head->next;
+    Node* prev = head;
+    if (current == nullptr ) {
+        push_front(val);
+        return head;
     }
+
+    if (index.ptr->next == head) {
+        push_front(val);
+        return head;
+    }
+    
+    while (current != index.ptr->next) {
+        current = current->next;
+        prev = prev->next;
+    }
+
+    Node* temp = new Node(val);
+    prev->next = temp;
+    temp->next = current;
+    
     ++l_size;
+    return iterator(temp); 
 }
 
 
@@ -160,13 +169,13 @@ void LinkedList<T>::reverse() noexcept
     Node* next = nullptr;
 
     while (current != nullptr) {
-    next = current->next; 
-    current->next = prev;  
-    prev = current;        
-    current = next;     
-}
+        next = current->next; 
+        current->next = prev;  
+        prev = current;        
+        current = next;     
+    }   
 
-head = prev;
+    head = prev;
 
 }
 
@@ -242,14 +251,9 @@ void LinkedList<T>::sort()
 template<typename T>
 void LinkedList<T>::clear() noexcept
 {
-    Node* current = head;
-    while (current != nullptr) {
-        Node* next = current->next;
-        delete current;
-        current = next;
+    while (l_size) {
+        pop_front();
     }
-    head = nullptr;
-    l_size = 0;
 }
 
 template <typename T>
@@ -279,7 +283,7 @@ template <class T>
 typename LinkedList<T>::iterator
 LinkedList<T>::begin()
 {
-    return iterator(head);
+    return head;
 }
 
 template <class T>
@@ -320,43 +324,56 @@ template <typename T>
 typename LinkedList<T>::const_iterator&
 LinkedList<T>::const_iterator::operator++()
 {   
-    ptr = ptr->next;
-    return *ptr;
+    if (ptr) ptr = ptr->next;
+    return *this;
 }
 
 template <typename T>
 typename LinkedList<T>::const_iterator 
 LinkedList<T>::const_iterator::operator++(int)
 {
-    ptr = ptr->next;
-    return *ptr;
+    const_iterator temp = *this;
+    ++(*this);
+    return temp;
 } 
 
 template <typename T>
 typename LinkedList<T>::iterator&
 LinkedList<T>::iterator::operator++()
 {   
-    ptr = ptr->next;
-    return *ptr;
+    if (ptr)ptr = ptr->next;
+    return *this;
 }
 
 template <typename T>
 typename LinkedList<T>::iterator 
 LinkedList<T>::iterator::operator++(int)
 {
-   
-    ptr = ptr->next;
-    return *ptr;
+    ++(*this);
+    return *this;
 } 
 
 template <typename T>
 const T& LinkedList<T>::const_iterator::operator*() const
 {
-    return *ptr;
-} 
+    return ptr->data;
+}
+
+
+template< class T>
+bool LinkedList<T>::const_iterator::operator==(const const_iterator &other) const
+{
+    return this->ptr == other.ptr;
+}
+
+template <class T>
+bool LinkedList<T>::const_iterator::operator!=(const const_iterator &other) const
+{
+    return this->ptr != other.ptr;
+}
 
 template <typename T>
 T& LinkedList<T>::iterator::operator*() 
 {
-    return *this->ptr;
+    return ptr->data;
 } 

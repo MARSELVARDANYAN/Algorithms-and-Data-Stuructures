@@ -4,8 +4,17 @@
 int main()
 {
     LinkedList<int> li;
-
+    li.push_front(744);
     li.push_front(7);
+    
+    auto it = ++li.begin();
+    
+    
+    li.insert_after(it, 444);
+
+    std::cout << *it << std::endl;
+
+    
     li.push_front(8);
 
     li.print_list();
@@ -15,7 +24,7 @@ int main()
     li.push_front(22);
     li.push_front(22);
     li.push_front(22);
-    li.push_front(22);
+    li.push_front(26);
     li.push_front(22);
     li.push_front(22);
     li.push_front(5);
@@ -27,7 +36,10 @@ int main()
     
     std::cout << li[1] << std::endl;
 
-    std::cout << "size == " << li.Get_size();
+    li.print_list();
+
+    
     li.clear();
+    std::cout << "size == " << li.Get_size();
 
 }
