@@ -1,2 +1,4 @@
 *.log
 *.vscode
+a.out
+/BST/.vscode
