@@ -1,4 +1,4 @@
-#include "../Header/BS_Tree.h"
+#include "../Headers/BS_Tree.h"
 
 
 int main()
