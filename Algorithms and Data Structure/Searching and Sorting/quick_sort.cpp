@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 int partition(int* arr, int low, int hight)
 {
     int pivot = arr[hight];
