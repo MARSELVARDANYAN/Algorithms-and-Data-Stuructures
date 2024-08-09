@@ -53,16 +53,16 @@ public:
     bool contains(T data);
 
     // Method to traverse the tree in pre-order
-    void preorderTraverse();
+    void preorderTraverse() const;
 
     // Method to traverse the tree in in-order
-    void inorderTraverse();
+    void inorderTraverse() const;
 
     //Method to traverse the tree in in-order
-    //void postorderTraverse();
+    void postorderTraverse() const;
     
     //Method to traverse the tree in in-order
-    //void levelOrderTraverse();
+    void levelOrderTraverse() const;
 };
 
 

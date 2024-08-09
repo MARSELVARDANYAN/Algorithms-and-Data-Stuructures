@@ -14,9 +14,12 @@ inline bool BST<T>::isEmpty() const
 }
 
 template <class T>
-inline int BST<T>::getHeight()
+inline int BST<T>::getHeight() const
 {
-    return 0;
+    if (root == nullptr) return 0;
+    
+    return getHeight(root);
+    
 }
 
 template <class T>
@@ -98,9 +101,15 @@ typename BST<T>::TreeNode* BST<T>::getEntry(TreeNode* node, const T &anEntry) co
 }
 
 template <class T>
-inline int BST<T>::getHeight(TreeNode *root)
+inline int BST<T>::getHeight(TreeNode *node) const
 {
-    return 0;
+    if (node == nullptr) return 0;
+    
+    int left_height = getHeight(node->left);
+    int right_height = getHeight(node->right);
+
+    return 1 + std::max(left_height, right_height);
+    
 }
 
 template <class T>
@@ -114,7 +123,7 @@ typename BST<T>::TreeNode* BST<T>::clear(TreeNode *node)
 }
 
 template <class T>
-void BST<T>::inOrderTraverse(TreeNode *node)
+void BST<T>::inOrderTraverse(TreeNode *node) const
 {
     if (node == nullptr) return;
     inOrderTraverse(node->left);
@@ -123,7 +132,8 @@ void BST<T>::inOrderTraverse(TreeNode *node)
 }
 
 template <class T>
-void BST<T>::preorderTraverse(TreeNode* node) {
+void BST<T>::preorderTraverse(TreeNode* node) const
+{
     if (node == nullptr) {
         return;
     }
@@ -133,7 +143,7 @@ void BST<T>::preorderTraverse(TreeNode* node) {
 }
 
 template <class T>
-inline void BST<T>::postorderTraverse(TreeNode *node)
+inline void BST<T>::postorderTraverse(TreeNode *node) const
 {
     if (node == nullptr) {
         return;
@@ -141,6 +151,20 @@ inline void BST<T>::postorderTraverse(TreeNode *node)
     preorderTraverse(node->left);
     preorderTraverse(node->right);
     std::cout << node->data << " --> " ;
+}
+
+template <class T>
+inline void BST<T>::levelOrderTraverse(TreeNode *node, int level) const
+{
+    if (node == nullptr) return;
+    
+    if (level == 1) {
+        std::cout << node->data << " --> ";
+    }
+    else if (level >= 1) {
+        levelOrderTraverse(node->left, level - 1);
+        levelOrderTraverse(node->right, level - 1);
+    }    
 }
 
 template <class T>
@@ -171,22 +195,33 @@ inline bool BST<T>::contains(T data)
 }
 
 template <class T>
-inline void BST<T>::preorderTraverse()
+inline void BST<T>::preorderTraverse() const
 {
     preorderTraverse(root);
     std::cout << std::endl;
 }
 
 template <class T>
-inline void BST<T>::inorderTraverse()
+inline void BST<T>::inorderTraverse() const
 {
     inOrderTraverse(root);
     std::cout << std::endl;
 }
 
 template <class T>
-inline void BST<T>::postOrderTraverse()
+inline void BST<T>::postOrderTraverse() const
 {
     postorderTraverse(root);
+    std::cout << std::endl;
+}
+
+template <class T>
+inline void BST<T>::levelOrderTraverse() const
+{
+    int h = getHeight(root);
+
+    for (size_t i = 1; i <= h; i++) {
+        levelOrderTraverse(root, i);
+    }
     std::cout << std::endl;
 }

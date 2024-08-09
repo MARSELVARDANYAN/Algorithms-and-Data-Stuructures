@@ -19,6 +19,7 @@ int main()
     obj.inorderTraverse();
     obj.preorderTraverse();
     obj.postOrderTraverse();
+    obj.levelOrderTraverse();
 
     std::cout << "Contains function returned -> " << obj.contains(10) << std::endl;
 

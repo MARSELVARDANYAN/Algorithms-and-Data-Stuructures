@@ -151,7 +151,7 @@ void BST<T>::clear()
 }
 
 template <class T>
-void BST<T>::inorderTraverse()
+void BST<T>::inorderTraverse() const
 {
     if (root == nullptr) return;
 
@@ -174,7 +174,60 @@ void BST<T>::inorderTraverse()
 }
 
 template <class T>
-void BST<T>::preorderTraverse() {
+inline void BST<T>::postorderTraverse() const
+{
+    if (root == nullptr) return;
+
+    std::stack<TreeNode*> st(root);
+    std::stack<T> out;
+
+    while (!st.empty()) {
+        
+        TreeNode * node = st.top();
+        st.pop();
+        out.push(node->data);
+
+        if (node->left != nullptr) {
+            st.push(node->left);
+        }
+        if (node->right != nullptr) {
+            st.push(node->right);
+        } 
+    }
+    
+    while (!out.empty()) {
+        std::cout << out.top() << " ";
+        out.pop();
+    } 
+}
+
+template <class T>
+inline void BST<T>::levelOrderTraverse() const
+{
+    if (root == nullptr) return;
+
+    std::queue<TreeNode*> qu;
+    qu.push(root);
+
+    while (!qu.empty()) {
+        
+        TreeNode* node = qu.front();
+        qu.pop();
+        std::cout << node->data << " ";
+
+        if (node-left != nullptr) {
+            qu.push(node->left);
+        }
+        if (node->right != nullptr) {
+            qu.push(node->right);
+        }          
+    }
+        
+}
+
+template <class T>
+void BST<T>::preorderTraverse() const 
+{
     if (root == nullptr) return;
 
         std::stack<TreeNode*> stack;

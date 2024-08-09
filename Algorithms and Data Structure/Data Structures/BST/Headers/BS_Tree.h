@@ -1,7 +1,7 @@
 #ifndef __BS_Tree__
 #define __BS_Tree__
 #include <iostream>
-
+#include <algorithm>
 
 template <class T>
 class BST
@@ -27,7 +27,7 @@ public:
     bool isEmpty() const;
 
     // Method to get the height of the tree
-    int getHeight();
+    int getHeight() const;
 
     // Method to get the number of nodes in the tree
     int getNumberOfNodes();
@@ -46,15 +46,17 @@ private:
 
     TreeNode* getEntry(TreeNode* root, const T& anEntry) const;
 
-    int getHeight(TreeNode* root);
+    int getHeight(TreeNode* node) const;
 
     TreeNode* clear(TreeNode* node);
 
-    void inOrderTraverse(TreeNode* node);
+    void inOrderTraverse(TreeNode* node) const;
 
-    void preorderTraverse(TreeNode* node);
+    void preorderTraverse(TreeNode* node)const;
 
-    void postorderTraverse(TreeNode* node);
+    void postorderTraverse(TreeNode* node) const;
+
+    void levelOrderTraverse(TreeNode* node, int level) const;
 
 
 public:
@@ -68,16 +70,16 @@ public:
     bool contains(T data);
 
     // Method to traverse the tree in pre-order
-    void preorderTraverse();
+    void preorderTraverse() const;
 
     // Method to traverse the tree in in-order
-    void inorderTraverse();
+    void inorderTraverse() const;
 
     //Method to traverse the tree in in-order
-    void postOrderTraverse();
+    void postOrderTraverse() const;
     
     //Method to traverse the tree in in-order
-    void levelOrderTraverse();
+    void levelOrderTraverse() const;
 };
 
 
