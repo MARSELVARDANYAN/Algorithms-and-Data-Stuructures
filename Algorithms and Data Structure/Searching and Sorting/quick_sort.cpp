@@ -7,7 +7,7 @@ int partition(int* arr, int low, int hight)
 
     int j = (low -1);
 
-    for (size_t i = low; i <= hight - 1; i++) {
+    for (size_t i = low; i <= hight - 2; i++) {
         if (arr[i] <= pivot) {
             ++j;
             std::swap(arr[i], arr[j]);

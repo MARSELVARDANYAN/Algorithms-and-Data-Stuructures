@@ -86,75 +86,70 @@ inline bool BST<T>::add(TreeNode *node, T newData)
 template <class T>
 typename BST<T>::TreeNode* BST<T>::getEntry(TreeNode* node, const T &anEntry) const
 {   
-    if (node == nullptr) {
-        return nullptr;
-    }
-    if (node->data == anEntry) {
-        return node;
-    }
-    else if (anEntry < node->data) {
+    if (node == nullptr || node->data == anEntry) return node;
+     
+    if (anEntry < node->data) {
         return getEntry(node->left, anEntry);
     }
-    else /*(anEntry > node->data) */{
-        return getEntry(node->right, anEntry);
-    }
+    
+    return getEntry(node->right, anEntry);
 }
 
 template <class T>
-inline int BST<T>::getHeight(TreeNode *node) const
+inline int BST<T>::__getHeight(TreeNode *node) const
 {
     if (node == nullptr) return 0;
     
-    int left_height = getHeight(node->left);
-    int right_height = getHeight(node->right);
+    int left_height = __getHeight(node->left);
+    int right_height = __getHeight(node->right);
 
     return 1 + std::max(left_height, right_height);
     
 }
 
 template <class T>
-typename BST<T>::TreeNode* BST<T>::clear(TreeNode *node)
+typename BST<T>::TreeNode* BST<T>::__clear(TreeNode *node)
 {
     if (node == nullptr) return nullptr;
-        clear(node->left);
-        clear(node->right);
+        __clear(node->left);
+        __clear(node->right);
         delete node;
         return nullptr;
 }
 
 template <class T>
-void BST<T>::inOrderTraverse(TreeNode *node) const
+void BST<T>::__inOrderTraverse(TreeNode *node) const
 {
     if (node == nullptr) return;
-    inOrderTraverse(node->left);
+    __inOrderTraverse(node->left);
     std::cout << node->data << " --> ";
-    inOrderTraverse(node->right);
+    __inOrderTraverse(node->right);
 }
 
 template <class T>
-void BST<T>::preorderTraverse(TreeNode* node) const
+void BST<T>::__preorderTraverse(TreeNode* node) const
 {
     if (node == nullptr) {
         return;
     }
     std::cout << node->data << " --> " ;
-    preorderTraverse(node->left);
-    preorderTraverse(node->right);
+    __preorderTraverse(node->left);
+    __preorderTraverse(node->right);
 }
 
 template <class T>
-inline void BST<T>::postorderTraverse(TreeNode *node) const
+inline void BST<T>::__postorderTraverse(TreeNode *node) const
 {
     if (node == nullptr) {
         return;
     }
-    preorderTraverse(node->left);
-    preorderTraverse(node->right);
+    __preorderTraverse(node->left);
+    __preorderTraverse(node->right);
     std::cout << node->data << " --> " ;
 }
 
 template <class T>
-inline void BST<T>::levelOrderTraverse(TreeNode *node, int level) const
+inline void BST<T>::__levelOrderTraverse(TreeNode *node, int level) const
 {
     if (node == nullptr) return;
     
@@ -162,15 +157,15 @@ inline void BST<T>::levelOrderTraverse(TreeNode *node, int level) const
         std::cout << node->data << " --> ";
     }
     else if (level >= 1) {
-        levelOrderTraverse(node->left, level - 1);
-        levelOrderTraverse(node->right, level - 1);
+        __levelOrderTraverse(node->left, level - 1);
+        __levelOrderTraverse(node->right, level - 1);
     }    
 }
 
 template <class T>
 inline void BST<T>::clear()
 {
-    root = clear(root);
+    root = __clear(root);
     node_count = 0;  
 }
 
@@ -195,33 +190,33 @@ inline bool BST<T>::contains(T data)
 }
 
 template <class T>
-inline void BST<T>::preorderTraverse() const
+inline void BST<T>::preOrderTraverse() const
 {
-    preorderTraverse(root);
+    __preorderTraverse(root);
     std::cout << std::endl;
 }
 
 template <class T>
-inline void BST<T>::inorderTraverse() const
+inline void BST<T>::inOrderTraverse() const
 {
-    inOrderTraverse(root);
+    __inOrderTraverse(root);
     std::cout << std::endl;
 }
 
 template <class T>
 inline void BST<T>::postOrderTraverse() const
 {
-    postorderTraverse(root);
+    __postorderTraverse(root);
     std::cout << std::endl;
 }
 
 template <class T>
 inline void BST<T>::levelOrderTraverse() const
 {
-    int h = getHeight(root);
+    int h = __getHeight(root);
 
     for (size_t i = 1; i <= h; i++) {
-        levelOrderTraverse(root, i);
+        __levelOrderTraverse(root, i);
     }
     std::cout << std::endl;
 }

@@ -78,7 +78,7 @@ inline bool BST<T>::add(T newData)
             if (node->left == nullptr) {
                 node->left = new TreeNode(newData);
                 ++node_count;
-                //return true;
+                return true;
             }
             node = node->left;
         }
@@ -86,7 +86,7 @@ inline bool BST<T>::add(T newData)
             if (node->right == nullptr) {
                 node->right = new TreeNode(newData);
                 ++node_count;
-                //return true;
+                return true;
             } 
             node = node->right;
         }else{

@@ -16,8 +16,8 @@ int main()
     obj.add(17);
     obj.add(8);
 
-    obj.inorderTraverse();
-    obj.preorderTraverse();
+    obj.inOrderTraverse();
+    obj.preOrderTraverse();
     obj.postOrderTraverse();
     obj.levelOrderTraverse();
 
