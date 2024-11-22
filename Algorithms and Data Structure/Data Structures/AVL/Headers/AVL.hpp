@@ -162,11 +162,11 @@ typename BST<T>::TreeNode *AVL<T>::__insert(typename BST<T>::TreeNode *node, int
 
 
 
-        if (balance > 1 && key < node->left->data)
+        if (balance >= 1 && key < node->left->data)
             return rotateRight(node);
 
 
-        if (balance < -1 && key > node->right->data)
+        if (balance <= -1 && key > node->right->data)
             return rotateLeft(node);
 
         if (balance > 1 && key > node->left->data) {

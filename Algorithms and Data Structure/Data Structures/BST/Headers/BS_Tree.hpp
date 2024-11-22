@@ -61,6 +61,13 @@ inline bool BST<T>::add(T newData)
 }
 
 template <class T>
+inline typename BST<T>::TreeNode *BST<T>::remove(const T val)
+{   
+    if(root == nullptr) return root;
+    return _remove(root, val);
+}
+
+template <class T>
 inline bool BST<T>::add(TreeNode *node, T newData)
 {
     if (newData < node->data) {
@@ -160,6 +167,53 @@ inline void BST<T>::__levelOrderTraverse(TreeNode *node, int level) const
         __levelOrderTraverse(node->left, level - 1);
         __levelOrderTraverse(node->right, level - 1);
     }    
+}
+
+template <class T>
+typename BST<T>::TreeNode* BST<T>::get_max(TreeNode *node) const
+{
+    if(!node || !node->right) return node;
+    return get_max(node->right);
+}
+
+template <class T>
+inline typename BST<T>::TreeNode *BST<T>::get_min(TreeNode *node) const
+{
+    if(!node || !node->left) return node;
+    return get_min(node->left);
+}
+
+template <class T>
+inline typename BST<T>::TreeNode* BST<T>::_remove(TreeNode* node, const T val)
+{
+    if(node == nullptr) return node;
+
+    if (node->data > val){
+        node->left = _remove(node->left, val);
+    }
+    else if(node->data < val){
+        node->right = _remove(node->right, val);
+    }
+    else{
+        if (node->left == nullptr) {
+            TreeNode* tmp = node->right;
+            delete node;
+            return tmp;
+        }
+        else if (node->right == nullptr) {
+            TreeNode* tmp = node->left;
+            delete node;
+            return tmp;
+        }
+
+        TreeNode* tmp = get_min(node->right);
+
+        node->data = tmp->data;
+
+        node->right = _remove(node->right, tmp->data);
+
+    }
+    return node;
 }
 
 template <class T>

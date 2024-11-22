@@ -1,5 +1,3 @@
-
-
 void insertion_sort(int* arr, int n)
 {
     for (size_t i = 1; i < n; i++)

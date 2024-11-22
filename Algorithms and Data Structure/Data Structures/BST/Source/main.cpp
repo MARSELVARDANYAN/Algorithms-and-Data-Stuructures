@@ -21,6 +21,8 @@ int main()
     obj.postOrderTraverse();
     obj.levelOrderTraverse();
 
+    obj.remove(7);
+
     std::cout << "Contains function returned -> " << obj.contains(10) << std::endl;
 
     std::cout << "Entry == " << obj.getEntry(3) << std::endl;
